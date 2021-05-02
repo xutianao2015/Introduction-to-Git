@@ -88,3 +88,8 @@ Writing a one-line log message with git commit -m "message"is good enough for ve
 The lines starting with # are comments, and won't be saved. (They are there to remind you what you are supposed to do and what files you have changed.) Your message should go at the top, and may be as long and as detailed as you want.
 
 Use git commit without -m to commit the changes. The Nano editor will open up. Write a meaningful message and use Ctrl+O and Enter to save, and then Ctrl+X to leave the editor.
+
+## How does Git store information?
+A commit contains metadata such as the author, the commit message, and the time the commit happened. In the diagram below, the most recent commit is at the bottom (feed0098), underneath its parent commits.
+Each commit also has a tree, which tracks the names and locations in the repository when that commit happened. In the oldest (top) commit, there were two files tracked by the repository.
+For each of the files listed in the tree, there is a blob. This contains a compressed snapshot of the contents of the file when the commit happened (blob is short for binary large object, which is a SQL database term for "may contain data of any kind"). In the middle commit, report.md and draft.md were changed, so the blobs are shown next to that commit. data/northern.csv didn't change in that commit, so the tree links to the blob from the previous commit. Reusing blobs between commits help make common operations fast and minimizes storage space.
