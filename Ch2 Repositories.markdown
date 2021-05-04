@@ -4,7 +4,7 @@ Every commit to a repository has a unique identifier called a hash (since it is 
 Hashes are what enable Git to share data efficiently between repositories. If two files are the same, their hashes are guaranteed to be the same. Similarly, if two commits contain the same files and have the same ancestors, their hashes will be the same as well. Git can therefore tell what information needs to be saved where by comparing hashes rather than comparing entire files.
 
 ## How can I view a specific commit?
-To view the details of a specific commit, you use the command git show with the first few characters of the commit's hash. For example, the command git show 0da2f7 produces this:
+To view the details of a specific commit, you use the command ```git show``` with the first few characters of the commit's hash. For example, the command git show 0da2f7 produces this:
 ```
     commit 0da2f7ad11664ca9ed933c1ccd1f3cd24d481e42
     Author: Rep Loop <repl@datacamp.com>
@@ -22,6 +22,29 @@ To view the details of a specific commit, you use the command git show with the 
 
     TODO: write executive summary.
 ```
+
+The first part is the same as the log entry shown by ```git log```. The second part shows the changes; as with ```git diff```, lines that the change removed are prefixed with``` -```, while lines that it added are prefixed with ```+```.
+
+Reminder: press the ```space bar``` to page down through ```git log```'s output and ```q``` to quit the paged display.
+```git show``` shows the latest commit.
+
+## What is Git's equivalent of a relative path?
+
+A hash is like an absolute path: it identifies a specific commit. Another way to identify a commit is to use the equivalent of a relative path. The special label HEAD, which we saw in the previous chapter, always refers to the most recent commit. The label HEAD~1 then refers to the commit before it, while HEAD~2 refers to the commit before that, and so on.
+
+Note that the symbol between HEAD and the number is a tilde ```~```, not a minus sign ```-```, and that there cannot be spaces before or after the tilde.
+E.G. ```git show HEAD~2```
+
+## How can I see who changed what in a file?
+```git log ``` displays the overall history of a project or file, but Git can give even more information. The command ```git annotate file``` shows who made the last change to each line of a file and when. For example, the first three lines of output from ```git annotate report.txt``` look something like this:
+```
+04307054        (  Rep Loop     2017-09-20 13:42:26 +0000       1)# Seasonal Dental Surgeries (2017) 2017-18
+5e6f92b6        (  Rep Loop     2017-09-20 13:42:26 +0000       2)
+5e6f92b6        (  Rep Loop     2017-09-20 13:42:26 +0000       3)TODO: write executive summary.
+```
+
+## How can I see what changed between two commits?
+```git show``` with a commit ID shows the changes made in a particular commit. To see the changes between two commits, you can use ```git diff ID1..ID2```, where ID1 and ID2 identify the two commits you're interested in, and the connector .. is a pair of dots. For example, ```git diff abc123..def456``` shows the differences between the commits abc123 and def456, while ```git diff HEAD~1..HEAD~3``` shows the differences between the state of the repository one commit in the past and its state three commits in the past.
 
 
 
