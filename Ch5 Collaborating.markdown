@@ -33,3 +33,40 @@ If you use an online git repository hosting service like GitHub or Bitbucket, a 
 If you are in a repository, you can list the names of its remotes using git remote.
 
 If you want more information, you can use git remote -v (for "verbose"), which shows the remote's URLs. Note that "URLs" is plural: it's possible for a remote to have several URLs associated with it for different purposes, though in practice each remote is almost always paired with just one URL.
+
+## How can I define remotes?
+When you clone a repository, Git automatically creates a remote called origin that points to the original repository. You can add more remotes using:
+
+    git remote add remote-name URL
+and remove existing ones using:
+
+    git remote rm remote-name
+You can connect any two Git repositories this way, but in practice, you will almost always connect repositories that share some common ancestry.
+
+## How can I pull in changes from a remote repository?
+Git keeps track of remote repositories so that you can pull changes from those repositories and push changes to them.
+
+Recall that the remote repository is often a repository in an online hosting service like GitHub. A typical workflow is that you pull in your collaborators' work from the remote repository so you have the latest version of everything, do some work yourself, then push your work back to the remote so that your collaborators have access to it.
+
+Pulling changes is straightforward: the command ```git pull remote branch``` gets everything in branch in the remote repository identified by remote and merges it into the current branch of your local repository. For example, if you are in the ```quarterly-report``` branch of your local repository, the command:
+
+    git pull thunk latest-analysis
+
+would get changes from latest-analysis branch in the repository associated with the remote called thunk and merge them into your quarterly-report branch.
+
+## What happens if I try to pull when I have unsaved changes?
+Just as Git stops you from switching branches when you have unsaved work, it also stops you from pulling in changes from a remote repository when doing so might overwrite things you have done locally. The fix is simple: either commit your local changes or revert them, and then try to pull again.
+
+    git pull origin
+    git checkout -- .
+
+## How can I push my changes to a remote repository?
+The complement of git pull is git push, which pushes the changes you have made locally into a remote repository. The most common way to use it is:
+
+    git push remote-name branch-name
+which pushes the contents of your branch branch-name into a branch with the same name in the remote repository associated with remote-name. It's possible to use different branch names at your end and the remote's end, but doing this quickly becomes confusing: it's almost always better to use the same names for branches across repositories.
+
+## What happens if my push conflicts with someone else's work?
+Overwriting your own work by accident is bad; overwriting someone else's is worse.
+
+To prevent this happening, Git does not allow you to push changes to a remote repository unless you have merged the contents of the remote repository into your own work.
